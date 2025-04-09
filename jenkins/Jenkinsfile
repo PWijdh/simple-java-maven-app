@@ -4,22 +4,21 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Maven Setup') {
+        stage('Build') {
             steps {
                 sh 'export M2_HOME=/opt/apache-maven-3.9.9'
                 sh 'export M2=/opt/apache-maven-3.9.9/bin'
-                sh 'export PATH=/opt/apache-maven-3.9.9/bin/:$PATH'
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'mvn -version'
-                sh 'mvn -B -DskipTests clean package'
+                sh 'export PATH=/opt/apache-maven-3.9.9:$PATH'
+                sh '/opt/apache-maven-3.9.9/bin/mvn -version'
+                sh '/opt/apache-maven-3.9.9/bin/mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'export M2_HOME=/opt/apache-maven-3.9.9'
+                sh 'export M2=/opt/apache-maven-3.9.9/bin'
+                sh 'export PATH=/opt/apache-maven-3.9.9:$PATH'
+                sh '/opt/apache-maven-3.9.9/bin/mvn test'
             }
             post {
                 always {
