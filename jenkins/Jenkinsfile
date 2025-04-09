@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh 'export M2_HOME=/opt/apache-maven-3.9.9'
                 sh 'export M2=/opt/apache-maven-3.9.9/bin'
-                sh 'export PATH=/opt/apache-maven-3.9.9/bin:$PATH'
+                sh 'export PATH=$M2_HOME:$M2:$PATH'
             }
         }
         stage('Build') {
